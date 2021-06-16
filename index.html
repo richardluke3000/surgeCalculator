@@ -1,19 +1,47 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
     <title>Hello World!</title>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    We are using Node.js <span id="node-version"></span>,
-    Chromium <span id="chrome-version"></span>,
-    and Electron <span id="electron-version"></span>.
+    <h1>surge extract sheet</h1>
+
+    <div class="container">
+      
+        <!-- <label for="select-directory">select file</label> -->
+        <button id="select-directory" name="select-directory">
+          select-file
+        </button>
+        <label for="select-directory" id="selected-file">[select a file]</label>
+        <br />
+        <span id="loading">
+
+        </span>
+        <br>
+        <label for="select">select sheet to extract</label>
+        <select name="select" id="select">
+          <option value="0">nothing</option>
+        </select>
+        <br />
+        <label for="rename">rename(optional)</label>
+        <input type="text" name="rename" id="rename" />s
+        <br />
+        <label for="destination">select destination</label>
+        <input type="text" />
+      
+    </div>
 
     <!-- You can also require other files to run in this process -->
-    <script src="./renderer.js"></script>
+    <script type="module" src="./renderer.js"></script>
   </body>
 </html>
