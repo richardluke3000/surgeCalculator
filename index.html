@@ -3,14 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'"
-    />
+ 
     <meta
       http-equiv="X-Content-Security-Policy"
       content="default-src 'self'; script-src 'self'"
     />
+    <style>
+      #loading{
+        background-color: red;
+      }
+    </style>
     <title>Hello World!</title>
   </head>
   <body>
@@ -24,7 +26,7 @@
         </button>
         <label for="select-directory" id="selected-file">[select a file]</label>
         <br />
-        <span id="loading">
+        <span id="loading" > 
 
         </span>
         <br>
@@ -33,11 +35,23 @@
           <option value="0">nothing</option>
         </select>
         <br />
+        <br><br><br><br><br>
         <label for="rename">rename(optional)</label>
-        <input type="text" name="rename" id="rename" />s
+        <textarea type="text" name="rename" id="rename">
+
+        </textarea>
+        
         <br />
-        <label for="destination">select destination</label>
-        <input type="text" />
+        <button id="destination_btn">select destination folder</button>
+        <br>
+        <br>
+
+        <span id="destination"></span>
+        <br>
+        <br>
+        <button id="extract">
+          extract
+        </button>
       
     </div>
 

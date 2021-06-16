@@ -42,7 +42,18 @@ app.on('window-all-closed', function () {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
-// save dialog
+// save dialog 
+ipcMain.on('destination', (event, args)=>{
+  let result = dialog.showOpenDialog({
+    properties:['openDirectory']
+  })
+  result.then((value)=>{
+    if(!value.canceled){
+      console.log(value);
+      event.sender.send('selected-destination', value.filePaths)
+    }
+  })
+} )
 
 ipcMain.on('open-file-dialog', (event,arg) => {
   console.log('files opened');
