@@ -16,45 +16,74 @@ window.addEventListener('DOMContentLoaded', () => {
   // for open file
   const selectDirBtn = document.getElementById('select-directory')
 
+  // for extracting
+  const extract = document.getElementById('extract')
+
   //for opening destination
 
   const destination = document.getElementById('destination_btn')
 
+  // request destination folder
   destination.addEventListener('click', (event) =>{
     ipcRenderer.send('destination')
   })
+
+  // request extract action
+  extract.addEventListener('click', (event)=>{
+    let source = document.getElementById('selected-file').innerText
+    
+    let destination = document.getElementById('destination').innerText
+    
+    let sheet_index = document.getElementById('select').value
+    
+    ipcRenderer.send('extract', [source, destination, sheet_index])
+  })
   
+
   selectDirBtn.addEventListener('click', (event) => {
     ipcRenderer.send('open-file-dialog')
     ipcRenderer.send('asynchronous-message')
   })
 
+
+  // when destination folder is selected
   ipcRenderer.on('selected-destination', (event, path)=>{
     let destination = document.getElementById('destination')
-    console.log(path.toString());
-    destination.innerText = path.toString()
-  })
-  ipcRenderer.on('selected-directory', (event, path) => {
-    console.log(path);
-    console.log(event);
-    
-    document.getElementById('selected-file').innerHTML = `${path}`
     let rename = document.getElementById('rename')
-    console.log(rename);
-    console.log(path.toString());
-        rename.value = path.toString()
-        console.log(rename.value);
+    
+    destination.innerText = path.toString()
+    destination.innerText += "\\" + rename.value
   })
+
+  // when the directory is selected
+  ipcRenderer.on('selected-directory', (event, path) => {
+    
+    let selected_file = document.getElementById('selected-file')
+    selected_file.innerText = `${path}`
+
+    let  file = selected_file.innerText.split("\\")
+    let rename = document.getElementById('rename')
+
+    rename.value = file[file.length - 1 ]
+
+  })
+
+  // when the sheets have been retrieved
   ipcRenderer.on('sheets', (event, data) => {
-   let list = data.split(',')
+   let list = data.split(',') //split the sheets into various sheets
       let sheets = document.getElementById('select');
+      let x = 0
+      let loading = document.getElementById('loading');
+
+      loading.innerHTML = 'please a wait moment...'
+
+      // for each sheet add to the drop down list
       list.forEach(item => {
+        sheets.innerHTML += (`<option value='${x}'>${item}</option>`)
         
-        sheets.innerHTML += (`<option value='0'>${item}</option>`)
-        // console.log(sheets);
-        loading.innerHTML = ''
-        
+        x++
       });
+      loading.innerHTML = ''
   })
 
 

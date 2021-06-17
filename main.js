@@ -55,6 +55,20 @@ ipcMain.on('destination', (event, args)=>{
   })
 } )
 
+ipcMain.on('extract', (event, arg)=>{
+  extract = spawn('python',['sheet.py', arg[0], arg[1], arg[2] ] )
+
+  console.log(typeof arg);
+  console.log('extracting' + arg[0] +  arg[1] + arg [2] );
+
+  extract.stdout.on('data', data => { console.log(data); event.sender.send('result', data.toString() )} )
+
+  
+  
+
+})
+
+
 ipcMain.on('open-file-dialog', (event,arg) => {
   console.log('files opened');
 
