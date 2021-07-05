@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <link rel="stylesheet" href="assets/main.css" />
+    <title>Surge Call Calculator</title>
+  </head>
+  <body>
+  <span id="loading">  </span>
+		<h1>Surge Call Manipulator</h1>
+		<h7> </h7>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+		<div class="topnav" id="myTopnav">
+		  <a href="index.html" class="active">Home</a>
+		  <a href="#about"class="false">About</a>
+		  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+		</div>
+			<i class="fa fa-bars"></i>
+		  </a>
+		</div>
+    <span id="loading">  </span>
+    <h1>Agregate Surge Call Sheet</h1>
+	<h4>Select all the sheets to add</h4>
+	<div class="container">
+    <div class="container-right">
+      <div id="grp-fields">
+        <a href="#" id="options">More options...</a>
+        <br>
+             <!-- row and collumn configuration -->
+      <input type="number" name="" width="2px" min="1" id="min-row" value="6" />
+      min-row <br />
+      <input
+      type="number"
+      name=""
+      width="2px"
+      min="1"
+      id="max-row"
+      value="100"
+    />
+    max-row <br />
+    <input
+    type="number"
+    name=""
+    width="2px"
+    min="1"
+    id="max-column"
+    value="100"
+  />
+  max-column <br />
+      <input
+        type="number"
+        name=""
+        width="2px"
+        min="1"
+        id="min-column"
+        value="1"
+      />
+      min-column <br />
+      </div>
+ 
+     
+      <div id="grp-dates">
+        
+      <input type="date" name="start" id="start" /><label for="start">start date</label>
+      <br />
+ 
+     
+      </div>
+
+    </div>
+</div>
+   
+
+    <!-- You can also require other files to run in this process -->
+    <script type="module" src="./renderer.js"></script>
+  </body>
+</html>

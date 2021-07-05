@@ -1,0 +1,72 @@
+#loading{
+    background-color: #396628;
+}
+.container{
+    background-color: #396628;
+
+}
+/*style link for the header*/
+.h1 {
+  background-color: rgb(253, 249, 249);
+  overflow: hidden;
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+  background-color: #333;
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 16px 20px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add an active class to highlight the current page */
+.topnav a.active {
+  background-color: ##295214;
+  color: white;
+}
+
+/* Hide the link that should open and close the topnav on small screens */
+.topnav .icon {
+  display: none;
+}
+
+
+
+body{
+    background-color: rgb(58, 53, 53);
+    color: whitesmoke;
+    font-family: sans-serif;
+}
+#options{
+    color: yellow;
+}
+button{
+    border-radius: 0%;
+    background-color: yellow;
+    border-color: transparent;
+}
+#loading{
+    position: relative;
+    
+}
+div{
+    padding: 5px;
+}
+.container{
+    display: flex;
+}
