@@ -38,18 +38,13 @@ window.addEventListener('DOMContentLoaded', () => {
     
     let sheet_index = document.getElementById('select').value
 
-    let start_date = document.getElementById('start').value
-
-    let min_row = document.getElementById('min-row').value
-    let max_row = document.getElementById('max-row').value
-    let max_column = document.getElementById('max-column').value
-    let min_column = document.getElementById('min-column').value
+ 
     let loading = document.getElementById('loading');
-
+console.log('ex');
     loading.innerHTML = 'trying to extract...'
 
     // return 1;
-    ipcRenderer.send('extract', [source, destination, sheet_index, start_date, min_row, max_row, max_column, min_column])
+    ipcRenderer.send('extract', [source, destination, sheet_index])
 
   })
   

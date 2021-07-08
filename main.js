@@ -74,7 +74,7 @@ ipcMain.on('extract', (event, arg) => {
   console.log(arg[2]);
 
   // first read fie
-  let sheet = XLSX.readFile(arg[0], {  sheets: [arg[2]] })
+  let sheet = XLSX.readFile(arg[0], {  sheets: [arg[2]], cellStyles:true, cellFormula:false })
 
 
   // creating a new workbok
@@ -83,34 +83,15 @@ ipcMain.on('extract', (event, arg) => {
   // get the workbook data
   let data = sheet.Sheets[arg[2]]
 
-  // convert data to json
-  XLSX.utils.sheet_to_json(data)
+  
+  // append sheet to new workbook
+  XLSX.utils.book_append_sheet(wb, data, arg[2]);
 
-  console.log( typeof(data) );
+  // write to a new file
+  XLSX.writeFile(wb, arg[1])
 
-  // convert to excel format
-console.log( JSON.stringify( data) );
-
-  // XLSX.utils.json_to_sheet( JSON.stringify( data));
-
-  // write to new file
-  var wbout = XLSX.write(data, { bookType: 'xlsx', type: 'binary' });
-
-  // XLSX.writeFile(wbout, `${arg[1]}`);
-
- 
-
-
-  /* Add the worksheet to the workbook */
-  // XLSX.utils.book_append_sheet(wb, ws, ws_name);
-
-  // extract = spawn('python', ['dates.py', arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6], arg[7]])
-
-
-  // loadEvent(event)
-  // extract.stdout.on('data', data => event.sender.send('result', data.toString()))
-
-
+  // send message 
+  event.sender.send('result', 'done')
 })
 
 
