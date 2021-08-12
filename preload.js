@@ -16,6 +16,9 @@ window.addEventListener('DOMContentLoaded', () => {
   // for open file
   const selectDirBtn = document.getElementById('select-directory')
 
+  // for files
+  const selectfilesBtn = document.getElementById('select-files-directory')
+
   // for extracting
   const extract = document.getElementById('extract')
 
@@ -26,11 +29,30 @@ window.addEventListener('DOMContentLoaded', () => {
   // options
 
   // request destination folder
-  destination.addEventListener('click', (event) =>{
+ 
+  try {
+     destination.addEventListener('click', (event) =>{
     ipcRenderer.send('destination')
   })
 
+
+  } catch (error) {
+    // console.error(error);
+  }
+
+  //  resuest files folder
+  try {
+    
+  selectfilesBtn.addEventListener('click', (event)=>{
+    ipcRenderer.send('filesFolder');
+  })
+
+  } catch (error) {
+    // console.error(error);
+  }
+
   // request extract action
+ try {
   extract.addEventListener('click', (event)=>{
     let source = document.getElementById('selected-file').innerText
     
@@ -52,12 +74,19 @@ window.addEventListener('DOMContentLoaded', () => {
     ipcRenderer.send('extract', [source, destination, sheet_index, start_date, min_row, max_row, max_column, min_column])
 
   })
+ } catch (error) {
+  //  console.error(error);
+ }
   
 
+try {
   selectDirBtn.addEventListener('click', (event) => {
     ipcRenderer.send('open-file-dialog')
     ipcRenderer.send('asynchronous-message')
   })
+} catch (error) {
+  // console.error(error);
+}
 
 
   // when destination folder is selected
@@ -70,6 +99,16 @@ window.addEventListener('DOMContentLoaded', () => {
     destination.innerText = path.toString()
     destination.innerText += "\\" + rename.value
   })
+
+  ipcRenderer.on('selected-consolidate', (event, dir, files) => {
+    let consolidate = document.getElementById('consolidate')
+
+    if (files.length > 0) {
+      consolidate.disabled = false
+    }
+
+
+  } )
 
   // when the directory is selected
   ipcRenderer.on('selected-directory', (event, path) => {

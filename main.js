@@ -1,11 +1,13 @@
 // for excel
 var XLSX = require('xlsx')
+
+var fs = require('fs')
 // Modules to control application life and create native browser window
 const { spawn } = require('child_process')
 
-try {
-  require('electron-reloader')(module)
-} catch (_) {}
+// try {
+//   require('electron-reloader')(module)
+// } catch (_) {}
 
 const { app, BrowserWindow, ipcMain, dialog } = require('electron')
 const path = require('path')
@@ -101,22 +103,13 @@ console.log( JSON.stringify( data) );
  
 
 
-  /* Add the worksheet to the workbook */
-  // XLSX.utils.book_append_sheet(wb, ws, ws_name);
-
-  // extract = spawn('python', ['dates.py', arg[0], arg[1], arg[2], arg[3], arg[4], arg[5], arg[6], arg[7]])
-
-
-  // loadEvent(event)
-  // extract.stdout.on('data', data => event.sender.send('result', data.toString()))
+ 
 
 
 })
 
 
 ipcMain.on('open-file-dialog', (event, arg) => {
-
-
 
 
   let result = dialog.showOpenDialog({
@@ -128,24 +121,70 @@ ipcMain.on('open-file-dialog', (event, arg) => {
 
       loadEvent(event)
 
-
-
-
-
       var workbook = XLSX.readFile(value.filePaths[0]);
       var sheet_name_list = workbook.SheetNames;
       event.sender.send('sheets', sheet_name_list)
 
-
-
       event.sender.send('selected-directory', value.filePaths)
-
-
     }
 
   })
 
 })
+
+ipcMain.on('filesFolder', (event, arg)=>{
+  let result = dialog.showOpenDialog({
+    properties: ['openDirectory']
+  })
+
+  result.then((value) => {
+    
+    if (!value.canceled) {
+
+      loadEvent(event)
+
+      console.log(value.filePaths);
+
+      // var workbook = XLSX.readFile(value.filePaths[0]);
+      // var sheet_name_list = workbook.SheetNames;
+      // event.sender.send('sheets', sheet_name_list)
+
+      //variable to contain files in the directory
+      let newFiles = [];
+
+
+    fs.readdir( value.filePaths[0], function(err, files){
+      
+      if (err) {
+        // do stuff to handle the error
+        
+        return event.sender.send('result', 'unable to do necessary stuff : ' + err)
+
+      }
+      let patt = new RegExp("^[A-z].*.xlsx")
+
+      
+
+      files.forEach(file => {
+
+        const filtered = patt.exec(file)
+
+
+        if( filtered ){
+          newFiles.push( filtered[0] )
+        }
+        
+      });
+      event.sender.send('selected-consolidate', value.filePaths, newFiles)
+      event.sender.send('result', `Found ${newFiles.length} files`)
+    } )
+      
+    }
+
+  })
+})
+
+
 
 function loadEvent(event) {
 
