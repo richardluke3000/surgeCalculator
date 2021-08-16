@@ -29,11 +29,11 @@ window.addEventListener('DOMContentLoaded', () => {
   // options
 
   // request destination folder
- 
+
   try {
-     destination.addEventListener('click', (event) =>{
-    ipcRenderer.send('destination')
-  })
+    destination.addEventListener('click', (event) => {
+      ipcRenderer.send('destination')
+    })
 
 
   } catch (error) {
@@ -42,55 +42,55 @@ window.addEventListener('DOMContentLoaded', () => {
 
   //  resuest files folder
   try {
-    
-  selectfilesBtn.addEventListener('click', (event)=>{
-    ipcRenderer.send('filesFolder');
-  })
+
+    selectfilesBtn.addEventListener('click', (event) => {
+      ipcRenderer.send('filesFolder');
+    })
 
   } catch (error) {
     // console.error(error);
   }
 
   // request extract action
- try {
-  extract.addEventListener('click', (event)=>{
-    let source = document.getElementById('selected-file').innerText
-    
-    let destination = document.getElementById('destination').innerText
-    
-    let sheet_index = document.getElementById('select').value
+  try {
+    extract.addEventListener('click', (event) => {
+      let source = document.getElementById('selected-file').innerText
 
-    let start_date = document.getElementById('start').value
+      let destination = document.getElementById('destination').innerText
 
-    let min_row = document.getElementById('min-row').value
-    let max_row = document.getElementById('max-row').value
-    let max_column = document.getElementById('max-column').value
-    let min_column = document.getElementById('min-column').value
-    let loading = document.getElementById('loading');
+      let sheet_index = document.getElementById('select').value
 
-    loading.innerHTML = 'trying to extract...'
+      let start_date =  '1'  //document.getElementById('start').value
 
-    // return 1;
-    ipcRenderer.send('extract', [source, destination, sheet_index, start_date, min_row, max_row, max_column, min_column])
+      let min_row =  '1'  //document.getElementById('min-row').value
+      let max_row =  '1'  //document.getElementById('max-row').value
+      let max_column =  '1'  //document.getElementById('max-column').value
+      let min_column =  '1'  //document.getElementById('min-column').value
+      let loading = document.getElementById('loading');
 
-  })
- } catch (error) {
-  //  console.error(error);
- }
-  
+      loading.innerHTML = 'trying to extract...'
 
-try {
-  selectDirBtn.addEventListener('click', (event) => {
-    ipcRenderer.send('open-file-dialog')
-    ipcRenderer.send('asynchronous-message')
-  })
-} catch (error) {
-  // console.error(error);
-}
+      // return 1;
+      ipcRenderer.send('extract', [source, destination, sheet_index, start_date, min_row, max_row, max_column, min_column])
+
+    })
+  } catch (error) {
+    //  console.error(error);
+  }
+
+
+  try {
+    selectDirBtn.addEventListener('click', (event) => {
+      ipcRenderer.send('open-file-dialog')
+      ipcRenderer.send('asynchronous-message')
+    })
+  } catch (error) {
+    // console.error(error);
+  }
 
 
   // when destination folder is selected
-  ipcRenderer.on('selected-destination', (event, path)=>{
+  ipcRenderer.on('selected-destination', (event, path) => {
     let destination = document.getElementById('destination')
     let rename = document.getElementById('rename')
     let loading = document.getElementById('loading');
@@ -105,41 +105,57 @@ try {
 
     if (files.length > 0) {
       consolidate.disabled = false
+
+    // get start date
+     let start = document.getElementById('start')
+     console.log( start.value );
+
+    //  get destination folder
+    let destination = document.getElementById('destination')
+
+console.log(files);
+console.log(dir);
+
+
+
+      consolidate.addEventListener( 'click' , (event)=>{
+        ipcRenderer.send('consolidate', dir, files , dir , start.value)
+      } )
     }
 
 
-  } )
+  })
 
   // when the directory is selected
   ipcRenderer.on('selected-directory', (event, path) => {
-    
+
     let selected_file = document.getElementById('selected-file')
     selected_file.innerText = `${path}`
 
-    let  file = selected_file.innerText.split("\\")
+    let file = selected_file.innerText.split("\\")
     let rename = document.getElementById('rename')
 
-    rename.value = file[file.length - 1 ]
+    rename.value = file[file.length - 1]
 
   })
 
   // when the sheets have been retrieved
   ipcRenderer.on('sheets', (event, data) => {
     // console.log(data);
-   let list = data.toString().split(',') //split the sheets into various sheets
-      let sheets = document.getElementById('select');
-      let x = 0
-      let loading = document.getElementById('loading');
+    let list = data.toString().split(',') //split the sheets into various sheets
+    let sheets = document.getElementById('select');
+    let x = 0
+    let loading = document.getElementById('loading');
 
-      loading.innerHTML = 'extracting'
+    loading.innerHTML = 'extracting'
 
-      // for each sheet add to the drop down list
-      list.forEach(item => {
-        sheets.innerHTML += (`<option value='${item}'>${item}</option>`)
-        
-        x++
-      });
-      loading.innerHTML = ''
+    // for each sheet add to the drop down list
+    list.forEach(item => {
+      sheets.innerHTML += (`<option value='${item}'>${item}</option>`)
+
+      x++
+    });
+    loading.innerHTML = ''
   })
 
 
@@ -147,16 +163,16 @@ try {
     const message = `Asynchronous message reply: ${arg}`
     console.log(message);
   })
-  
+
   ipcRenderer.on('loading', (event, arg) => {
     let loading = document.getElementById('loading');
 
     loading.innerHTML = 'please a wait moment...'
-    
+
   })
 
   // message to get when the extracting job is finished
-  ipcRenderer.on('result', (event, arg)=>{
+  ipcRenderer.on('result', (event, arg) => {
     let loading = document.getElementById('loading');
 
     loading.innerHTML = arg

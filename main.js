@@ -1,17 +1,29 @@
 // for excel
 var XLSX = require('xlsx')
 
+const {BrowserWindow, Menu, app, shell, dialog, ipcMain} = require('electron')
+
+// MENU TEMPLATE
+let template = [{
+  label: 'Links',
+  click: () => {
+    app.emit('activate')
+  }
+}]
+
+
+
 var fs = require('fs')
 // Modules to control application life and create native browser window
 const { spawn } = require('child_process')
 
-// try {
-//   require('electron-reloader')(module)
-// } catch (_) {}
+try {
+  require('electron-reloader')(module)
+} catch (_) {}
 
-const { app, BrowserWindow, ipcMain, dialog } = require('electron')
 const path = require('path')
 const { log } = require('console')
+
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -50,6 +62,13 @@ app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
 
+
+// WHEN APP IS READY
+app.on('ready', () => {
+  // const menu = Menu.buildFromTemplate(template)
+  // Menu.setApplicationMenu(menu)
+})
+
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
@@ -86,19 +105,19 @@ ipcMain.on('extract', (event, arg) => {
   let data = sheet.Sheets[arg[2]]
 
   // convert data to json
-  XLSX.utils.sheet_to_json(data)
+  // XLSX.utils.sheet_to_json(data)
 
-  console.log( typeof(data) );
+ 
 
   // convert to excel format
-console.log( JSON.stringify( data) );
+
 
   // XLSX.utils.json_to_sheet( JSON.stringify( data));
 
   // write to new file
   var wbout = XLSX.write(data, { bookType: 'xlsx', type: 'binary' });
 
-  // XLSX.writeFile(wbout, `${arg[1]}`);
+  XLSX.writeFile(wbout, `${arg[1]}`);
 
  
 
@@ -184,6 +203,62 @@ ipcMain.on('filesFolder', (event, arg)=>{
   })
 })
 
+ipcMain.on('consolidate', (event ,  arg, files , arg3, startDate )=>{
+  console.log(arg3);
+
+  loadEvent(event)
+
+
+  let finalsheet = 
+
+  files.forEach(element => {
+     let all = 0 ;
+
+    let path = `${arg}\\${element}`
+    // console.log(path);
+
+    var sheet = XLSX.readFile( path, {sheets: 'Defaulter Q1' } );
+    console.log(sheet) ;
+
+    let data = sheet.Sheets['Defaulter Q1']
+    // XLSX.utils.sheet_to_json(data)
+
+    // let max  = 100 ;
+    // row = [];
+
+    // for (let index = 0; index < 100; index++) {
+    //   const element = 100;
+      
+    //   row.push( data[] )
+
+
+
+    // }
+
+    
+
+    // console.log(dat );
+
+
+    if ( startDate ==  data['F6'].w ){
+
+
+      console.log('equal');
+    } else{
+      console.log( data['F6'].w );
+      console.log( ' not eeual  ' );
+      console.log( startDate );
+    }
+
+    console.log( data['6'] );
+    
+
+
+
+  });
+
+
+})
 
 
 function loadEvent(event) {
