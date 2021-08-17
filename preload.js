@@ -113,13 +113,17 @@ window.addEventListener('DOMContentLoaded', () => {
     //  get destination folder
     let destination = document.getElementById('destination')
 
-console.log(files);
-console.log(dir);
 
 
 
       consolidate.addEventListener( 'click' , (event)=>{
-        ipcRenderer.send('consolidate', dir, files , dir , start.value)
+        // get sheet name
+        let sheet = document.getElementById('select').value
+        
+
+
+        ipcRenderer.send('consolidate', dir, files , destination.innerText , start.value, sheet)
+
       } )
     }
 

@@ -164,9 +164,6 @@ ipcMain.on('filesFolder', (event, arg)=>{
 
       console.log(value.filePaths);
 
-      // var workbook = XLSX.readFile(value.filePaths[0]);
-      // var sheet_name_list = workbook.SheetNames;
-      // event.sender.send('sheets', sheet_name_list)
 
       //variable to contain files in the directory
       let newFiles = [];
@@ -203,59 +200,87 @@ ipcMain.on('filesFolder', (event, arg)=>{
   })
 })
 
-ipcMain.on('consolidate', (event ,  arg, files , arg3, startDate )=>{
-  console.log(arg3);
+ipcMain.on('consolidate', (event ,  dir, files , destination, startDate, sheetToConsolidate )=>{
+  
+  let arg = dir
+
+  // collumn to search for a date
+  let dateCollumn;
 
   loadEvent(event)
 
 
-  let finalsheet = 
+  let finalsheet = []
 
-  files.forEach(element => {
-     let all = 0 ;
+  files.forEach((element, index) => {
+     
 
     let path = `${arg}\\${element}`
-    // console.log(path);
-
-    var sheet = XLSX.readFile( path, {sheets: 'Defaulter Q1' } );
-    console.log(sheet) ;
-
-    let data = sheet.Sheets['Defaulter Q1']
-    // XLSX.utils.sheet_to_json(data)
-
-    // let max  = 100 ;
-    // row = [];
-
-    // for (let index = 0; index < 100; index++) {
-    //   const element = 100;
-      
-    //   row.push( data[] )
-
-
-
-    // }
-
-    
-
-    // console.log(dat );
-
-
-    if ( startDate ==  data['F6'].w ){
-
-
-      console.log('equal');
-    } else{
-      console.log( data['F6'].w );
-      console.log( ' not eeual  ' );
-      console.log( startDate );
+    if( sheetToConsolidate === 'Defaulter Q1' ){
+      dateCollumn = 'F'
+    }else{
+      dateCollumn = 'E'
     }
 
-    console.log( data['6'] );
-    
+    var sheet = XLSX.readFile( path, {sheets: sheetToConsolidate } );
+   
 
+    let data = sheet.Sheets[sheetToConsolidate]
+  
+
+    XLSX.utils.sheet_to_json(data)
+    let check = Date.parse(startDate).toString().substr(0,5)
+    
+    let taken = [] ;
+   
+    // this will check every key / or cell in the sheeet
+    for (const key in data) {
+     
+
+      if( key[0] == dateCollumn && Date.parse(data[key].w).toString().substr(0,5) ==  check ){
+        let row = key.substr(1,100);
+        
+        
+          for (const key in data) {
+            
+            if( row == key.substr(1,100)   ){
+              // console.log(`at ${key} there is ${data[key]} `);
+              taken.push(   data[key].v )
+            }
+          }
+
+      }
+      if ( taken.length > 0  ){
+        finalsheet.push(taken)
+        taken = []
+      }
+    }
+
+    
+   
+   
 
 
   });
+  
+  finalsheet = XLSX.utils.aoa_to_sheet(finalsheet);
+
+  let wb = XLSX.utils.book_new();
+
+  wb.Props = {
+      Title: "surge cascade",
+      Subject: "Output",
+      Author: "UI-HEXED",
+      CreatedDate: new Date(),
+  }
+
+  XLSX.utils.book_append_sheet(wb, finalsheet, sheetToConsolidate)
+
+  XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+  XLSX.writeFile(wb, destination);
+  
+  event.sender.send('result', 'finished consolidating')
 
 
 })
