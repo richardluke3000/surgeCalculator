@@ -199,6 +199,16 @@ ipcMain.on('consolidate', (event ,  dir, files , destination, startDate, sheetTo
 
   let finalsheet = []
 
+  /*
+  * 
+  Fix
+  weeky difference is 604800000
+  *
+  * 
+  * 
+  * */
+
+
   files.forEach((element, index) => {
      
 
@@ -219,6 +229,9 @@ ipcMain.on('consolidate', (event ,  dir, files , destination, startDate, sheetTo
     XLSX.utils.sheet_to_json(data)
 
     let check = Date.parse(startDate).toString().substr(0,5)
+    let check2 = parseInt(check) + 6
+    let check2string = check2.toString()
+    console.log(check2string);
     
     let taken = [] ;
    
@@ -226,7 +239,7 @@ ipcMain.on('consolidate', (event ,  dir, files , destination, startDate, sheetTo
     for (const key in data) {
      
 
-      if( key[0] == dateCollumn && Date.parse(data[key].w).toString().substr(0,5) ==  check ){
+      if( key[0] == dateCollumn && ( Date.parse(data[key].w).toString().substr(0,5) ==  check ||  Date.parse(data[key].w).toString().substr(0,5) == check2string )){
         let row = key.substr(1,100);
         
         
