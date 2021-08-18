@@ -17,12 +17,10 @@ var fs = require('fs')
 // Modules to control application life and create native browser window
 const { spawn } = require('child_process')
 
-try {
-  require('electron-reloader')(module)
-} catch (_) {}
+
 
 const path = require('path')
-const { log } = require('console')
+
 
 function createWindow() {
   // Create the browser window.
@@ -104,25 +102,14 @@ ipcMain.on('extract', (event, arg) => {
   // get the workbook data
   let data = sheet.Sheets[arg[2]]
 
-  // convert data to json
-  // XLSX.utils.sheet_to_json(data)
-
- 
-
-  // convert to excel format
-
-
-  // XLSX.utils.json_to_sheet( JSON.stringify( data));
+  XLSX.utils.book_append_sheet(wb, data, arg[2])
 
   // write to new file
-  var wbout = XLSX.write(data, { bookType: 'xlsx', type: 'binary' });
+  XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
 
-  XLSX.writeFile(wbout, `${arg[1]}`);
+  XLSX.writeFile(wb, `${arg[1]}`);
 
- 
-
-
- 
+  event.sender.send('result', 'finished Extracting sheet')
 
 
 })
@@ -216,6 +203,7 @@ ipcMain.on('consolidate', (event ,  dir, files , destination, startDate, sheetTo
      
 
     let path = `${arg}\\${element}`
+
     if( sheetToConsolidate === 'Defaulter Q1' ){
       dateCollumn = 'F'
     }else{
@@ -229,6 +217,7 @@ ipcMain.on('consolidate', (event ,  dir, files , destination, startDate, sheetTo
   
 
     XLSX.utils.sheet_to_json(data)
+
     let check = Date.parse(startDate).toString().substr(0,5)
     
     let taken = [] ;
@@ -243,10 +232,9 @@ ipcMain.on('consolidate', (event ,  dir, files , destination, startDate, sheetTo
         
           for (const key in data) {
             
-            if( row == key.substr(1,100)   ){
-              // console.log(`at ${key} there is ${data[key]} `);
-              taken.push(   data[key].v )
-            }
+            if( row == key.substr(1,100)   )
+              taken.push( data[key].v )
+            
           }
 
       }
@@ -255,11 +243,6 @@ ipcMain.on('consolidate', (event ,  dir, files , destination, startDate, sheetTo
         taken = []
       }
     }
-
-    
-   
-   
-
 
   });
   

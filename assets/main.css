@@ -36,7 +36,7 @@
 
 /* Add an active class to highlight the current page */
 .topnav a.active {
-  background-color: ##295214;
+  background-color: #295214;
   color: white;
 }
 
@@ -60,6 +60,16 @@ button{
     background-color: yellow;
     border-color: transparent;
 }
+
+button:hover{
+  transition: 300ms;
+  background-color: #59b338;
+  cursor: pointer;
+  text-shadow: -5px 3px 3px whitesmoke;
+  
+}
+
+
 #loading{
     position: relative;
     
@@ -69,4 +79,13 @@ div{
 }
 .container{
     display: flex;
+}
+select{
+  background-color: transparent;
+ 
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-width: thin;
+  cursor: pointer;
 }

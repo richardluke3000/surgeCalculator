@@ -21,8 +21,8 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 		<div class="topnav" id="myTopnav">
-		  <a href="index.html" class="active">Home</a>
-		  <a href="#about"class="false">About</a>
+		  <a href="index.html" class="fasle">Home</a>
+		  <a href="#about"class="">About</a>
 		  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
 		</div>
 			<i class="fa fa-bars"></i>
@@ -35,29 +35,29 @@
     <div class="container-left">
       <!-- <label for="select-directory">select file</label> -->
       <div id="grp-select-file">
-          <label for="select-files-directory" id="selected-files-directory">Select a file</label>
+          <label for="select-files-directory" id="selected-files-directory">Select the WorkBooks Folder</label>
           <button id="select-files-directory" name="select-files-directory">
-              Select-file
+              Select-Folder
           </button>
           <br />
     </div>
           <br />
   <div id="grp-sheet">
-    <label for="select">select sheet to extract</label>
+    <label for="select">Select sheet </label>
     <select name="select" id="select">
-            <option value="0">all</option>
+            
         <option value="SOP_ AIT reporting">SOP_ AIT reporting</option><option value="SOP_ MA reporting">SOP_ MA reporting</option><option value="SOP_OPD screen reporting">SOP_OPD screen reporting</option><option value="SoP_Defaulter tracing report">SoP_Defaulter tracing report</option><option value="Active Index Testing ">Active Index Testing </option><option value="OPD Screening">OPD Screening</option><option value="Missed Appointments ">Missed Appointments </option><option value="Defaulter Q1">Defaulter Q1</option><option value="Bi-weekly &amp; surge call dates ">Bi-weekly &amp; surge call dates </option><option value="Reference">Reference</option></select>
   </div>
 
       <div id="grp-rename">
-            <textarea type="text" name="rename" id="rename">week.xlsx</textarea>  
+            <textarea type="text" name="rename" id="rename" cols="30" rows="3">week.xlsx</textarea>  
               <label for="rename">rename(optional)</label>
           
 
       </div>
 
   <div id="grp-destination">
-  <button id="destination_btn">select destination folder</button>
+  <button id="destination_btn">Select destination folder</button>
       
 
       <span id="destination"></span>
@@ -75,41 +75,12 @@
         <a href="#" id="options">More options...</a>
         <br>
              <!-- row and collumn configuration -->
-      <input type="number" name="" width="2px" min="1" id="min-row" value="6" />
-      min-row <br />
-      <input
-      type="number"
-      name=""
-      width="2px"
-      min="1"
-      id="max-row"
-      value="100"
-    />
-    max-row <br />
-    <input
-    type="number"
-    name=""
-    width="2px"
-    min="1"
-    id="max-column"
-    value="100"
-  />
-  max-column <br />
-      <input
-        type="number"
-        name=""
-        width="2px"
-        min="1"
-        id="min-column"
-        value="1"
-      />
-      min-column <br />
-      </div>
+      
  
      
       <div id="grp-dates">
         
-      <input type="date" name="start" id="start" /><label for="start">start date</label>
+     <label for="start">Date</label> <input type="date" name="start" id="start" />
       <br />
  
      
