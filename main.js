@@ -149,7 +149,7 @@ ipcMain.on('filesFolder', (event, arg)=>{
 
       loadEvent(event)
 
-      console.log(value.filePaths);
+      
 
 
       //variable to contain files in the directory
@@ -196,81 +196,80 @@ ipcMain.on('consolidate', (event ,  dir, files , destination, startDate, sheetTo
 
   loadEvent(event)
 
+  let array_of_sheets = ["Active Index Testing ", "OPD Screening", "Missed Appointments ", "Defaulter Q1"]
 
   let finalsheet = []
 
-  /*
-  * 
-  Fix
-  weeky difference is 604800000
-  *
-  * 
-  * 
-  * */
+  let wb = XLSX.utils.book_new();
+  wb.Props = {
+    Title: "surge cascade " + startDate ,
+    Subject: "Output",
+    Author: "UI-HEXED",
+    CreatedDate: new Date(),
+}
 
-
-  files.forEach((element, index) => {
-     
-
-    let path = `${arg}\\${element}`
-
-    if( sheetToConsolidate === 'Defaulter Q1' ){
-      dateCollumn = 'F'
-    }else{
-      dateCollumn = 'E'
-    }
-
-    var sheet = XLSX.readFile( path, {sheets: sheetToConsolidate } );
-   
-
-    let data = sheet.Sheets[sheetToConsolidate]
-  
-
-    XLSX.utils.sheet_to_json(data)
-
-    let check = Date.parse(startDate).toString().substr(0,5)
-    let check2 = parseInt(check) + 6
-    let check2string = check2.toString()
-    console.log(check2string);
+  array_of_sheets.forEach(element => {
     
-    let taken = [] ;
-   
-    // this will check every key / or cell in the sheeet
-    for (const key in data) {
+    sheetToConsolidate = element
+
+    files.forEach((element, index) => {
      
 
-      if( key[0] == dateCollumn && ( Date.parse(data[key].w).toString().substr(0,5) ==  check ||  Date.parse(data[key].w).toString().substr(0,5) == check2string )){
-        let row = key.substr(1,100);
-        
-        
-          for (const key in data) {
-            
-            if( row == key.substr(1,100)   )
-              taken.push( data[key].v )
-            
-          }
+      let path = `${arg}\\${element}`
+  
+      if( sheetToConsolidate === 'Defaulter Q1' ){
+        dateCollumn = 'F'
+      }else{
+        dateCollumn = 'E'
+      }
+  
+      var sheet = XLSX.readFile( path, {sheets: sheetToConsolidate } );
+     
+  
+      let data = sheet.Sheets[sheetToConsolidate]
+    
+  
+      XLSX.utils.sheet_to_json(data)
+  
+      // parsing date to be compatible with workboook dates
+      let check = Date.parse(startDate).toString().substr(0,5)
+      let check2 = parseInt(check) + 6
+      let check2string = check2.toString()
+     
+      
+      let taken = [] ;
+     
+      // this will check every key / or cell in the sheeet
+      for (const key in data) {
+       
+  
+        if( key[0] == dateCollumn && ( Date.parse(data[key].w).toString().substr(0,5) ==  check ||  Date.parse(data[key].w).toString().substr(0,5) == check2string )){
+          let row = key.substr(1,100);
+          
+          
+            for (const key in data) {
+              
+              if( row == key.substr(1,100)   )
+                taken.push( data[key].v )
+              
+            }
+  
+        }
+        if ( taken.length > 0  ){
+          finalsheet.push(taken)
+          taken = []
+        }
+      }
+  
+    });
 
-      }
-      if ( taken.length > 0  ){
-        finalsheet.push(taken)
-        taken = []
-      }
-    }
+    let sheet_of_all_files = XLSX.utils.aoa_to_sheet(finalsheet);
+
+    finalsheet = []
+
+    XLSX.utils.book_append_sheet(wb, sheet_of_all_files, sheetToConsolidate)
 
   });
-  
-  finalsheet = XLSX.utils.aoa_to_sheet(finalsheet);
-
-  let wb = XLSX.utils.book_new();
-
-  wb.Props = {
-      Title: "surge cascade",
-      Subject: "Output",
-      Author: "UI-HEXED",
-      CreatedDate: new Date(),
-  }
-
-  XLSX.utils.book_append_sheet(wb, finalsheet, sheetToConsolidate)
 
   XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
 
