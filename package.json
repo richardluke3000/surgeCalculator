@@ -1,10 +1,22 @@
 {
   "name": "electron-quick-start",
   "version": "1.0.0",
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-zip"
+        }
+      ]
+    }
+  },
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -17,10 +29,19 @@
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.59",
     "electron": "^13.1.1",
+    "electron-builder": "^22.11.7",
     "electron-reloader": "^1.2.1"
   },
   "dependencies": {
+    "@electron-forge/maker-zip": "^6.0.0-beta.59",
     "xlsx": "^0.17.0"
+  },
+  "build": {
+    "appId": "your.id",
+    "win": {
+      "target" : "portable "
+    }
   }
 }
