@@ -82,7 +82,6 @@ filesFolder()
 
 consolidate()
 
-
 function consolidate() {
   ipcMain.on('consolidate', (event, dir, files, destination, startDate, sheetToConsolidate) => {
 
@@ -99,7 +98,7 @@ function consolidate() {
 
     let wb = XLSX.utils.book_new()
     wb.Props = {
-      Title: "surge cascade " + startDate,
+      Title: "surge cascade ",
       Subject: "Output",
       Author: "UI-HEXED",
       CreatedDate: new Date(),
@@ -129,7 +128,7 @@ function consolidate() {
         XLSX.utils.sheet_to_json(data)
 
         // parsing date to be compatible with workboook dates
-        let check = Date.parse(startDate).toString().substr(0, 5)
+        let check = Date.parse(startDate[sheetToConsolidate]).toString().substr(0, 5)
         let check2 = parseInt(check) + 6
         let check2string = check2.toString()
 
@@ -151,7 +150,7 @@ function consolidate() {
                   taken.push(data[key].w)
                 }
                 else {
-                  taken.push(data[key].v)
+                  taken.push(data[key].w)
                 }
 
               }

@@ -12,6 +12,9 @@ window.addEventListener('DOMContentLoaded', () => {
     replaceText(`${type}-version`, process.versions[type])
   }
 
+  document.getElementsByTagName('input').
+
+
   Selected_file = 'path'
   // for open file
   const selectDirBtn = document.getElementById('select-directory')
@@ -102,13 +105,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
   ipcRenderer.on('selected-consolidate', (event, dir, files) => {
     let consolidate = document.getElementById('consolidate')
-
+  
     if (files.length > 0) {
       consolidate.disabled = false
 
     // get start date
-     let start = document.getElementById('start')
-     console.log( start.value );
+    //  let start = document.getElementById('start')
+    //  console.log( start.value );
 
     //  get destination folder
     let destination = document.getElementById('destination')
@@ -117,12 +120,24 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
       consolidate.addEventListener( 'click' , (event)=>{
+        let dates = document.getElementsByTagName('input')
+        let datesObject = {
+    
+        };
+    
+        for (let index = 0; index < dates.length; index++) {
+           datesObject[dates[index].name] = dates[index].value;
+          
+        }
+    
+        console.log(datesObject);
+        
         // get sheet name
         let sheet = document.getElementById('select').value
         
 
 
-        ipcRenderer.send('consolidate', dir, files , destination.innerText , start.value, sheet)
+        ipcRenderer.send('consolidate', dir, files , destination.innerText , datesObject, sheet)
 
       } )
     }
