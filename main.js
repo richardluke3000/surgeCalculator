@@ -146,12 +146,9 @@ function consolidate() {
 
               if (row == key.substr(1, 100)) {
                 // this if statement will check date collumn to output correct date
-                if (key[0] == dateCollumn) {
+               
                   taken.push(data[key].w)
-                }
-                else {
-                  taken.push(data[key].w)
-                }
+                
 
               }
 
