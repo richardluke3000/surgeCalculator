@@ -267,7 +267,7 @@ function extract() {
   ipcMain.on('extract', (event, arg) => {
 
     // first read fie
-    let sheet = XLSX.readFile(arg[0], { sheets: [arg[2]] })
+    let sheet = XLSX.readFile(arg[0],  { sheets: [arg[2]] , cellDates: true })
 
 
     // creating a new workbok
@@ -279,7 +279,7 @@ function extract() {
     XLSX.utils.book_append_sheet(wb, data, arg[2])
 
     // write to new file
-    XLSX.write(wb, { bookType: 'xlsx', type: 'binary' })
+    XLSX.write(wb, { bookType: 'xlsx', type: 'binary', cellDates:true })
 
     XLSX.writeFile(wb, `${arg[1]}`)
 
@@ -289,6 +289,15 @@ function extract() {
   })
 }
 
+/**
+ * @param void
+ * 
+ * @returns null
+ * 
+ * @
+ * 
+ * function for getting destination
+ */
 function destination() {
   ipcMain.on('destination', (event) => {
     let result = dialog.showOpenDialog({
