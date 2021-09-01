@@ -107,7 +107,9 @@ function consolidate() {
     array_of_sheets.forEach(element => {
 
       sheetToConsolidate = element
+      finalsheet = [];
       finalsheet.push(  heads( sheetToConsolidate ) )
+      // console.log(  heads( sheetToConsolidate ) );
 
       files.forEach((element, index) => {
 
@@ -314,8 +316,8 @@ function loadEvent(event) {
 function heads(sheet) {
   let headers = {
     "Active Index Testing ": [
-      "District",
-      "Site",
+      "District", 
+      "Site", "District_site",
       "UID",
       "Cohort Week Start",
       "Cohort Week End",
@@ -342,11 +344,11 @@ function heads(sheet) {
       "Remediation Plan",
       "Responsible person(s)",
       "Timeframe for remediating problem",
-      "Current status/Update",
+      "Current status/Update"
     ],
     "OPD Screening": [
       "District",
-      "Site",
+      "Site", "District_site",
       "UID",
       "Week Start",
       "Week End",
@@ -366,122 +368,45 @@ function heads(sheet) {
       "Remediation Plan",
       "Responsible person(s)",
       "Timeframe for remediating problem",
-      "Current status/Update",
+      "Current status/Update"
     ],
     "Missed Appointments ": [
-      `District
-    `,
-      `Site
-    `,
-      `UID
-    `,
-      `Cohort Week Start
-    `,
-      `Cohort Week End
-    `,
-      `Cohort graduation date  (28-day follow-up)
-    `,
-      `Reporting Due Date/ Biweekly report due 
-    `,
-      `Surge Call date 
-    `,
-      `# of patients who missed appointment (cohort denominator)
-    `,
-      `# patients who missed appiontment ≥ 14 days (tracing denominator)
-    `,
-      `No contact tracing attempted - # who missed appointment ≥ 14 days and  not traced 
-    `,
-      `Of patients not traced, # with no physical address or phone number
-    `,
-      `# patients who missed appointments traced by phone only
-    `,
-      `# patients who missed appointments traced physically only - home visit 
-    `,
-      `# patients who missed appointment traced by both phone and home visit
-    `,
-      `Total Attempted to Trace
-    `,
-      `Successfully traced
-    `,
-      `% traced
-    `,
-      `Back to Care -- Traced and brought back to care
-    `,
-      `Self Return to Care -- Not traced but returned to care
-    `,
-      `% Back in Care
-    `,
-      `Self-Transferred Out
-    `,
-      `Died
-    `,
-      `Stopped ART
-    `,
-      `Promised to return but not yet visited clinic
-    `,
-      `On ART, due to ART gap (poor adherence)
-    `,
-      `On ART, no gap (e.g., received emergency supply)
-    `,
-      `LTFU-- Total number not reachable (by phone, home visit, or both)
-    `,
-      `% LTFU
-    `,
-      `Describe specific problems & gaps related to missed appt tracing at this site
-    `,
-      `Remediation Plan
-    `,
-      `Responsible person(s)
-    `,
-      `Timeframe for remediating problem
-    `,
-      `Current status/Update
-    `,
+      "District",
+      "Site", "District_site",
+      "UID",
+      "Cohort Week Start",
+      "Cohort Week End",
+      "Cohort graduation date  (28-day follow-up)",
+      "Reporting Due Date/ Biweekly report due ",
+      "Surge Call date ",
+      "# of patients who missed appointment (cohort denominator)",
+      "# patients who missed appiontment ≥ 14 days (tracing denominator)",
+      "No contact tracing attempted - # who missed appointment ≥ 14 days and  not traced ",
+      "Of patients not traced, # with no physical address or phone number",
+      "# patients who missed appointments traced by phone only",
+      "# patients who missed appointments traced physically only - home visit ",
+      "# patients who missed appointment traced by both phone and home visit",
+      "Total Attempted to Trace",
+      "Successfully traced",
+      "% traced",
+      "Back to Care -- Traced and brought back to care",
+      "Self Return to Care -- Not traced but returned to care",
+      "% Back in Care",
+      "Self-Transferred Out",
+      "Died",
+      "Stopped ART",
+      "Promised to return but not yet visited clinic",
+      "On ART, due to ART gap (poor adherence)",
+      "On ART, no gap (e.g., received emergency supply)",
+      "LTFU-- Total number not reachable (by phone, home visit, or both)",
+      "% LTFU",
+      "Describe specific problems & gaps related to missed appt tracing at this site",
+      "Remediation Plan",
+      "Responsible person(s)",
+      "Timeframe for remediating problem",
+      "Current status/Update"
     ],
-    "Defaulter Q1":[`District 
-    `, `Site 
-    `, `UID
-    `, `Current Reporting Quarter
-    `, `Data Collection Date
-    `, `Reporting Due Date
-    `, `Previous Reporting Quarter
-    `, `Total TX_CURR- previous reporting quarter
-    `, `Generate PEPFAR TX_CURR report from EMR and enter total 
-    `, `Total Defaulters- Generate the EMR defaulter list and enter total number
-    `, `False Defaulters - of total defaulters # with an appointment that had not been entered in EMR)
-    `, `Alive in Care
-    `, `T/O
-    `, `Died
-    `, `Stop
-    `, `Duplicate
-    `, `True Defaulters- of total defaulters # truly 2 months late for scheduled appt
-    `, `No contact tracing attempted 
-    `, `% Not Contacted
-    `, `Of those not traced, # with no phone number or physical address in record
-    `, `# defaulters traced by phone only
-    `, `# defaulters traced physically only - home visit 
-    `, `# defaulters traced by both phone and home visit
-    `, `Total Attempted to Trace
-    `, `Successfully traced
-    `, `% traced
-    `, `Back to Care -- Traced and brought back to care
-    `, `Self Return to Care -- Not traced but returned to care
-    `, `% Back in Care
-    `, `Self-Transferred Out
-    `, `Died
-    `, `Stopped ART
-    `, `Promised to return but not yet visited clinic
-    `, `On ART due to ART gap (poor adherence)
-    `, `On ART, received emergency supply
-    `, `LTFU- Total not reachable (by phone, home visit, or both)
-    `, `% LTFU
-    `, `Describe specific problems & gaps related to missed appt tracing at this site
-    `, `Remediation Plan
-    `, `Responsible person(s)
-    `, `Timeframe for remediating problem
-    `, `Current status/Update
-    `
-      
+    "Defaulter Q1":["District ", "Site ", "UID", "Current Reporting Quarter", "Data Collection Date", "Reporting Due Date", "Previous Reporting Quarter", "Total TX_CURR- previous reporting quarter", "Generate PEPFAR TX_CURR report from EMR and enter total ", "Total Defaulters- Generate the EMR defaulter list and enter total number", "False Defaulters - of total defaulters # with an appointment that had not been entered in EMR)", "Alive in Care", "T/O", "Died", "Stop", "Duplicate", "True Defaulters- of total defaulters # truly 2 months late for scheduled appt", "No contact tracing attempted ", "% Not Contacted", "Of those not traced, # with no phone number or physical address in record", "# defaulters traced by phone only", "# defaulters traced physically only - home visit ", "# defaulters traced by both phone and home visit", "Total Attempted to Trace", "Successfully traced", "% traced", "Back to Care -- Traced and brought back to care", "Self Return to Care -- Not traced but returned to care", "% Back in Care", "Self-Transferred Out", "Died", "Stopped ART", "Promised to return but not yet visited clinic", "On ART due to ART gap (poor adherence)", "On ART, received emergency supply", "LTFU- Total not reachable (by phone, home visit, or both)", "% LTFU", "Describe specific problems & gaps related to missed appt tracing at this site", "Remediation Plan", "Responsible person(s)", "Timeframe for remediating problem", "Current status/Update"
     ]
   };
 
