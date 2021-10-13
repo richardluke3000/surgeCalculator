@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@electron-forge/maker-zip": "^6.0.0-beta.59",
-    "xlsx": "^0.17.0"
+    "xlsx": "^0.17.3"
   },
   "build": {
     "appId": "your.id",
