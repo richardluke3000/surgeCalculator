@@ -1433,10 +1433,10 @@ electron-rebuild@^2.3.2:
     tar "^6.0.5"
     yargs "^16.0.0"
 
-electron-reloader@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/electron-reloader/-/electron-reloader-1.2.1.tgz#c9e2f2887f3960488cb2b6bf9e633791d3395b0c"
-  integrity sha512-S7rcXXImlGXsEAGwB8tJ/nLrvAFzO95IS0Ux27A8XjRrDRFKj46O2aahaZ9D908FIj+BzywgNCofHQO5EhwioA==
+electron-reloader@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/electron-reloader/-/electron-reloader-1.2.3.tgz#7e9233ba86f7dfbf1a15e6f57537ad0370fadc5a"
+  integrity sha512-aDnACAzNg0QvQhzw7LYOx/nVS10mEtbuG6M0QQvNQcLnJEwFs6is+EGRCnM+KQlQ4KcTbdwnt07nd7ZjHpY4iw==
   dependencies:
     chalk "^4.1.0"
     chokidar "^3.5.0"
